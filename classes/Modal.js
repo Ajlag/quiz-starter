@@ -1,42 +1,49 @@
 class Modal {
-    constructor(handleSubmit) {
-        this.handleSubmit = handleSubmit;
-    }
+  constructor(handleSubmit) {
+    this.handleSubmit = handleSubmit;
+  }
 
-    createUI() {
-        const containerdiv = document.querySelector(".container");
-        const divModal = document.createElement("div");
-        divModal.className = "modal";
+  handlePositive() {
+    console.log(this);
+    this.handleSubmit();
+    this.handleCancel();
+  }
+  createUI() {
+    const selectRoot = document.querySelector(".root");
+    const divModal = document.createElement("div");
+    divModal.className = "modal";
 
-        const modalContent = document.createElement("div");
-        modalContent.className = "modal-content";
+    selectRoot.appendChild(divModal);
+    const divModalContent = document.createElement("div");
+    divModalContent.className = "modal-content";
+    divModal.appendChild(divModalContent);
 
-        const modalQuestion = document.createElement("p");
-        modalQuestion.innerText = "Are you sure?";
-        modalContent.appendChild(modalQuestion);
+    const pQuestion = document.createElement("p");
+    pQuestion.innerText = "Are you sure?";
+    divModalContent.appendChild(pQuestion);
 
-        const groupModal = document.createElement("div");
-        groupModal.className = "group-modal";
-        modalContent.appendChild(groupModal);
+    const divGroupModal = document.createElement("div");
+    divGroupModal.className = "group-modal";
+    divModalContent.appendChild(divGroupModal);
 
-        const buttonSubmit = document.createElement("button");
-        buttonSubmit.className = "btn-success";
-        buttonSubmit.innerText = "Yes";
-        buttonSubmit.addEventListener("click", () => this.handleSubmit(e));
+    const btnSubmit = document.createElement("button");
+    btnSubmit.className = "btn-success";
+    btnSubmit.innerText = "Yes";
+    divGroupModal.appendChild(btnSubmit);
+    btnSubmit.addEventListener("click", (e) =>
+      this.handlePositive.call(this, e)
+    );
 
-        const buttonCancel = document.createElement("button");
-        buttonCancel.className = "btn-danger";
-        buttonCancel.innerText = "No";
-        buttonCancel.addEventListener("click", this.handleCancel);
+    const btnCancel = document.createElement("button");
+    btnCancel.className = "btn-danger";
+    btnCancel.innerText = "No";
+    divGroupModal.appendChild(btnCancel);
+    btnCancel.addEventListener("click", this.handleCancel);
+  }
 
-        groupModal.appendChild(buttonSubmit);
-        groupModal.appendChild(buttonCancel);
-        divModal.appendChild(modalContent);
-        containerdiv.appendChild(divModal);
-    }
-
-    handleCancel() {
-        const modal = document.querySelector(".modal");
-        modal.remove();
-    }
+  handleCancel() {
+    const modal = document.querySelector(".modal");
+    modal.remove();
+    console.log("Modal si removed");
+  }
 }

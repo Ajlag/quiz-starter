@@ -1,46 +1,54 @@
 class Question {
-    constructor(questionObj) {
-        this.question = questionObj.question;
-        this.answers = questionObj.answers;
-        this.correct_answer = questionObj.correct_answer;
-        this.attemplet = false;
+  constructor(questionObj) {
+    this.question = questionObj.question;
+    this.answers = questionObj.answers;
+    this.correct_answer = questionObj.correct_answer;
+    this.attemptedAnswer = false;
+  }
+
+  isCorectAnswer() {
+    return this.attemptedAnswer === this.answers[this.correct_answer]
+      ? true
+      : false;
+  }
+
+  createUI(divQuestion, divAnswer) {
+    divQuestion.innerText = this.question;
+
+    for (let i = 0; i < this.answers.length; i++) {
+      const answ = document.createElement("div");
+      answ.classList.add("answ");
+      answ.innerText = this.answers[i];
+      divAnswer.appendChild(answ);
+      const that = this;
+      answ.addEventListener("click", (e) => this.openModal(e, that));
     }
+  }
 
-    isCorectAnswer(ans) {
-        return ans === this.answers[this.correct_answer] ? true : false;
+  openModal(e, that) {
+    if (this.attemptedAnswer) {
+      return;
     }
+    console.log(this);
+    const newModal = new Modal(() => {
+      that.handleAnswerQuiz(e);
+    });
+    newModal.createUI();
+  }
 
-    createUI(divQuestion, divAnswer) {
-        divQuestion.innerText = this.question;
+  proba() {
+    console.log("bravooo ");
+  }
 
-        for (let i = 0; i < this.answers.length; i++) {
-            const answ = document.createElement("div");
-            answ.classList.add("answ");
-            answ.innerText = this.answers[i];
-            divAnswer.appendChild(answ);
-
-            answ.addEventListener("click", this.openModal);
-        }
+  handleAnswerQuiz(e) {
+    if (this.attemptedAnswer) {
+      return;
     }
-
-    openModal() {
-        const modal = new Modal((e) => this.handleAnswerQuiz(e));
-        console.log("modal");
-        modal.createUI();
+    this.attemptedAnswer = e.target.innerText;
+    if (this.isCorectAnswer()) {
+      e.target.style.backgroundColor = "green";
+    } else {
+      e.target.style.backgroundColor = "red";
     }
-
-    handleAnswerQuiz(e) {
-        if (this.attemplet) {
-            return;
-        }
-        if (this.isCorectAnswer(e.target.innerText)) {
-            e.target.style.backgroundColor = "green";
-            console.log("uslo");
-        } else {
-            e.target.style.backgroundColor = "red";
-            console.log("pogresno");
-        }
-
-        this.attemplet = true;
-    }
+  }
 }

@@ -6,32 +6,31 @@
     <link rel="stylesheet" href="./css/style-quiz.css" />
   </head>
   <body>
-    <div class="container">
-      <div class="quiz-header">
-        <div class="group timer">
-          <p>Timer</p>
-          <p id="timer">00:30</p>
+    <div class="root">
+      <div class="container">
+        <div class="quiz-header">
+          <div class="group timer">
+            <p>Timer</p>
+            <p id="timer">00:30</p>
+          </div>
         </div>
-        <div class="group">
-          <p>Score</p>
-          <p id="score">0</p>
-        </div>
-      </div>
 
-      <div class="question"></div>
-      <div class="answer"></div>
-      <div class="footer">
-        <div class="group-btn">
-          <button class="previous">Previous</button>
-          <button class="next">Next</button>
+        <div class="question"></div>
+        <div class="answer"></div>
+        <div class="footer">
+          <div class="group-btn">
+            <button class="previous">Previous</button>
+            <button class="next">Next</button>
+          </div>
         </div>
       </div>
     </div>
 
-    <script src="./utiles.js"></script>
     <script src="./classes/Modal.js"></script>
-    <script src="./classes/Game.js"></script>
+
+    <script src="./utiles.js"></script>
     <script src="./classes/Question.js"></script>
+    <script src="./classes/Game.js"></script>
     <script src="./classes/Score.js"></script>
     <script src="questions.js"></script>
     <script src="quiz.js"></script>
