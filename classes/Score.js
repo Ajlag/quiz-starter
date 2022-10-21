@@ -3,7 +3,7 @@ class Score {
     this.score = score;
   }
 
-  incrementScore(currentQuestion) {
+  incrementScore(currentQuestion, newG) {
     const currentScore = document.querySelectorAll(".score_question");
     currentScore[currentQuestion + 1].style.backgroundColor = "green";
   }

@@ -19,6 +19,11 @@ class Game {
     this.score = new Score(0);
     this.score.createUI(questions.length, this.currentQuestion);
   }
+
+  removeScore() {
+    const selectScore = document.querySelector(".score_ladder");
+    selectScore.remove();
+  }
   start() {
     this.shuffle(100000);
     this.createQuestion();
@@ -51,13 +56,17 @@ class Game {
 
   restartButton() {
     const restartBtn = document.querySelector(".restart");
-    restartBtn.addEventListener("click", () => {
-      console.log("restart");
-    });
+    restartBtn.addEventListener("click", () => this.restart.call(this));
   }
 
   restart() {
+    this.shuffle(10000);
     this.currentQuestion = 0;
+    this.currentQuestionObj.attemptedAnswer = false;
+    this.removeScore();
+    this.changeAnswer();
+    this.showScore();
+    this.createQuestion();
   }
   changeAnswer() {
     const divAnsw = document.querySelectorAll(".answ");
@@ -96,7 +105,7 @@ class Game {
 
   createTimer() {
     const selectTimer = document.querySelector("#timer");
-    let sec = 29;
+    let sec = 30;
     let timer = setInterval(() => {
       if (this.currentQuestionObj.attemptedAnswer) {
         sec = 29;
