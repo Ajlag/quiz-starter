@@ -67,7 +67,8 @@ body {
   justify-content: center;
   align-items: center;
 }
-.group-btn button {
+.group-btn button,
+.restart {
   color: white;
   background-color: #3366ff;
   padding: 20px;
@@ -77,7 +78,8 @@ body {
   margin: 10px;
   font-size: 17px;
 }
-.group-btn button:hover {
+.group-btn button:hover,
+.restart:hover {
   background-color: white;
   color: black;
 }

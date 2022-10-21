@@ -25,6 +25,8 @@ class Game {
     this.nextButton();
     this.previousButton();
     this.showScore();
+    this.createTimer();
+    this.restartButton();
   }
 
   createQuestion() {
@@ -47,12 +49,24 @@ class Game {
     prevButton.addEventListener("click", () => this.previous.call(this));
   }
 
+  restartButton() {
+    const restartBtn = document.querySelector(".restart");
+    restartBtn.addEventListener("click", () => {
+      console.log("restart");
+    });
+  }
+
+  restart() {
+    this.currentQuestion = 0;
+  }
   changeAnswer() {
     const divAnsw = document.querySelectorAll(".answ");
     divAnsw.forEach((e) => e.remove());
   }
 
   next() {
+    this.createTimer();
+
     if (this.currentQuestion === this.questions.length - 1) {
       return;
     }
@@ -74,8 +88,33 @@ class Game {
       return;
     }
 
+    this.currentQuestionObj.attemptedAnswer = false;
     this.changeAnswer();
     this.currentQuestion--;
     this.createQuestion();
+  }
+
+  createTimer() {
+    const selectTimer = document.querySelector("#timer");
+    let sec = 29;
+    let timer = setInterval(() => {
+      if (this.currentQuestionObj.attemptedAnswer) {
+        sec = 29;
+        return;
+      }
+      selectTimer.innerHTML = "00:" + sec;
+
+      if (sec <= 10) {
+        selectTimer.style.color = "red";
+      }
+      if (sec === 0) {
+        this.currentQuestionObj.attemptedAnswer = true;
+        selectTimer.innerHTML = "00:00";
+
+        return;
+      } else {
+        sec--;
+      }
+    }, 1000);
   }
 }
