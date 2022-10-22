@@ -67,7 +67,9 @@ class Game {
     this.changeAnswer();
     this.showScore();
     this.createQuestion();
+    // this.createTimer();
   }
+
   changeAnswer() {
     const divAnsw = document.querySelectorAll(".answ");
     divAnsw.forEach((e) => e.remove());
@@ -75,6 +77,11 @@ class Game {
 
   next() {
     this.createTimer();
+
+    this.score.incrementScore(
+      this.currentQuestion,
+      this.currentQuestionObj.isCorectAnswer()
+    );
 
     if (this.currentQuestion === this.questions.length - 1) {
       return;
@@ -87,7 +94,6 @@ class Game {
     }
 
     this.changeAnswer();
-    this.score.incrementScore(this.currentQuestion);
     this.currentQuestion++;
     this.createQuestion();
   }
@@ -101,25 +107,34 @@ class Game {
       return;
     }
 
+    this.createTimer();
     console.log(this.currentQuestionObj.attemptedAnswer);
     this.changeAnswer();
     this.currentQuestion--;
-    this.currentQuestionObj.attemptedAnswer = true;
+
+    const pitanje = this.questions[this.currentQuestion];
+    const tacanOdg = pitanje.correct_answer;
 
     this.createQuestion();
+
+    this.currentQuestionObj.attemptedAnswer = true;
+
+    const divAnsw = document.querySelectorAll(".answ");
+    divAnsw[tacanOdg].style.backgroundColor = "green";
   }
 
   createTimer() {
     const selectTimer = document.querySelector("#timer");
-    let sec = 30;
+    let sec = 29;
     let timer = setInterval(() => {
       if (this.currentQuestionObj.attemptedAnswer) {
-        sec = 30;
+        sec = 29;
         return;
       }
       selectTimer.innerHTML = "00:" + sec;
       selectTimer.style.color = "white";
-      if (sec <= 10) {
+      if (sec < 10) {
+        selectTimer.innerHTML = "00:0" + sec;
         selectTimer.style.color = "red";
       }
       if (sec === 0) {
