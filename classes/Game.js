@@ -97,9 +97,15 @@ class Game {
       return;
     }
 
-    this.currentQuestionObj.attemptedAnswer = false;
+    if (!this.currentQuestionObj.attemptedAnswer) {
+      return;
+    }
+
+    console.log(this.currentQuestionObj.attemptedAnswer);
     this.changeAnswer();
     this.currentQuestion--;
+    this.currentQuestionObj.attemptedAnswer = true;
+
     this.createQuestion();
   }
 
@@ -108,11 +114,11 @@ class Game {
     let sec = 30;
     let timer = setInterval(() => {
       if (this.currentQuestionObj.attemptedAnswer) {
-        sec = 29;
+        sec = 30;
         return;
       }
       selectTimer.innerHTML = "00:" + sec;
-
+      selectTimer.style.color = "white";
       if (sec <= 10) {
         selectTimer.style.color = "red";
       }

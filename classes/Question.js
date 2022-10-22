@@ -36,10 +36,6 @@ class Question {
     newModal.createUI();
   }
 
-  proba() {
-    console.log("bravooo ");
-  }
-
   handleAnswerQuiz(e) {
     if (this.attemptedAnswer) {
       return;
