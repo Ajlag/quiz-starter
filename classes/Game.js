@@ -2,9 +2,7 @@ class Game {
   constructor(questions) {
     this.questions = questions;
     this.currentQuestion = 0;
-    this.maxQuestion = 0;
-    this.clickPrevious = false;
-    this.maxQueCorrect = true;
+    this.hightScore = localStorage.getItem("highScore");
   }
 
   shuffle(numOfShuffles) {
@@ -28,6 +26,7 @@ class Game {
     selectScore.remove();
   }
   start() {
+    localStorage.setItem("highScore", this.hightScore);
     this.shuffle(100000);
     this.createQuestion();
     this.nextButton();
@@ -65,8 +64,6 @@ class Game {
   restart() {
     this.shuffle(10000);
     this.currentQuestion = 0;
-    this.maxQuestion = 0;
-    this.maxQueCorrect = true;
     this.currentQuestionObj.attemptedAnswer = false;
     this.removeScore();
     this.changeAnswer();
@@ -82,6 +79,7 @@ class Game {
   }
 
   next() {
+    console.log(this.hightScore);
     if (this.currentQuestion === this.questions.length - 1) {
       this.timesUp("Well done! You answered all the questions correctly.");
       return;
@@ -106,10 +104,13 @@ class Game {
     this.changeAnswer();
     this.currentQuestion++;
     this.createQuestion();
+
+    if (this.currentQuestion + 1 > this.hightScore) {
+      localStorage.setItem("highScore", this.currentQuestion);
+    }
   }
 
   previous() {
-    this.clickPrevious = true;
     if (this.currentQuestion === 0) {
       return;
     }

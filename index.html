@@ -1,16 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./css/style.css" />
     <title>Quiz</title>
-</head>
-<body>
-<div class="container">
-    <div class="group">Are you Ready?</div>
-    <a class="start" href="./quiz.html">Start game</a>
-</div>
-</body>
+  </head>
+  <body>
+    <div class="container">
+      <div class="highScore">
+        <div class="score">
+          <p>High Score:    <span class="maxScore"><span></span></p>
+        </div>
+      </div>
+
+      <div class="group">Are you Ready?</div>
+      <a class="start" href="./quiz.html">Start game</a>
+    </div>
+
+   <script>
+    const maxScore = document.querySelector(".maxScore");
+    maxScore.innerText = localStorage.getItem('highScore');
+    
+   </script>
+  </body>
 </html>
