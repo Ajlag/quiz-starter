@@ -82,6 +82,11 @@ class Game {
   }
 
   next() {
+    if (this.currentQuestion === this.questions.length - 1) {
+      this.timesUp("Well done! You answered all the questions correctly.");
+      return;
+    }
+
     this.removeTimer();
     this.createTimer();
 
@@ -90,13 +95,11 @@ class Game {
       this.currentQuestionObj.isCorectAnswer()
     );
 
-    if (this.currentQuestion === this.questions.length - 1) {
-      return;
-    }
     if (!this.currentQuestionObj.attemptedAnswer) {
       return;
     }
     if (!this.currentQuestionObj.isCorectAnswer()) {
+      this.timesUp("You're wrong! Run the quiz again on restart.");
       return;
     }
 
@@ -151,12 +154,40 @@ class Game {
       if (sec === 0) {
         pTimer.innerHTML = "00:00";
         this.currentQuestionObj.attemptedAnswer = true;
-
+        this.timesUp("Time has expired, please restart the quiz!");
         return;
       } else {
         sec--;
       }
     }, 1000);
+  }
+
+  timesUp(text) {
+    const selectRoot = document.querySelector(".root");
+    const divModal = document.createElement("div");
+    divModal.className = "modal";
+
+    selectRoot.appendChild(divModal);
+    const divModalContent = document.createElement("div");
+    divModalContent.className = "modal-content";
+    divModal.appendChild(divModalContent);
+
+    const pQuestion = document.createElement("p");
+    pQuestion.innerText = text;
+    divModalContent.appendChild(pQuestion);
+
+    const divGroupModal = document.createElement("div");
+    divGroupModal.className = "group-modal";
+    divModalContent.appendChild(divGroupModal);
+
+    const btnCancel = document.createElement("button");
+    btnCancel.className = "btn-danger";
+    btnCancel.innerText = "Close";
+    divGroupModal.appendChild(btnCancel);
+
+    btnCancel.addEventListener("click", () => {
+      divModal.remove();
+    });
   }
 
   removeTimer() {
